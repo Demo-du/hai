@@ -24,7 +24,12 @@ public class tijiao {
     		cc.add(sc.nextLine());
     	}
     	String numcar=sc.nextLine();
-    	int ncar=Integer.valueOf(numcar);
+    	//numcar.trim();
+    	String hi=numcar.replaceAll(" ", "");
+    	//String []ceshi=numcar.split(" ");
+    	int ncar=Integer.valueOf(hi);
+    //	int ncar=sc.nextInt();
+    	//int ncar=Integer.parseInt(numcar);
     	//int kk=sc.nextInt();
     	for(int i=0;i<ncar;i++){
     		dd.add(sc.nextLine());
@@ -45,6 +50,7 @@ public class tijiao {
     		for(int i=0;i<2;i++)
  	    	   System.out.println(Deploy.deployServer(jieguo)[i]);	
     	}else{
+    		System.out.println("YES");
     		System.out.println("1"+" "+Integer.valueOf(p*ncar)+" "+"0");
     		for(int i=0;i<ncar;i++){
     			System.out.println(String.valueOf(i+1)+" "+"yes");
@@ -298,6 +304,7 @@ class Global {
 	  public static int w;//地图宽
 	  public static int h;//地图高
 	  public static int num_car;//汽车数
+	  public static int [][]num_px;
 	//  public static int m;//质量//不要用
 	  public static int time_wait_max;//最大等待时间
 	  public static int time_wait_sum=0;//最大等待时间
@@ -379,7 +386,8 @@ class Init {
     		Global.ditu[i]=graphContent[i+2].split(" ");
     	}
     	//第四部分初始化
-    	Global.num_car=Integer.valueOf(graphContent[2+width]);
+    	String ceshi4=graphContent[2+width].replaceAll(" ", "");
+    	Global.num_car=Integer.valueOf(ceshi4);
     	//车相关信息初始化
     	Global.car_p=new int [Global.num_car];
     	Global.car_sesult=new int [Global.num_car][7];//车的结果
@@ -571,7 +579,7 @@ class Check {
      * 检查图是否有效
      */
     public static String map_check(){
-    	if(is_arrive()&&is_2()){
+    	if(is_arrive()&&is_2()&&is_3()){
     		Global.map_flag=true;
     		return "YES";
     	}
@@ -599,6 +607,46 @@ class Check {
     	}
     }
     public static boolean is_3(){
-    	return true;
+    	Global.num_px=new int [Global.w][Global.h];
+    	for(int i=0;i<Global.w;i++){//横向扫描
+    		for(int j=0;j<Global.h;j++){
+    			if(Global.ditu[i][j].equals("P")){
+    				if(i>0){//看上
+    					if(Global.ditu[i-1][j].equals("X"))
+    						Global.num_px[i][j]++;
+    				}
+    				if(j<Global.h-1){//看右
+    					if(Global.ditu[i][j+1].equals("X"))
+    						Global.num_px[i][j]++;
+    					if(i==17&&j==3){
+    					//	System.out.println("17找到了");
+    					}	
+    				}
+    				if(j>0){//看左
+    					if(Global.ditu[i][j-1].equals("X"))
+    						Global.num_px[i][j]++;
+    				}
+    				if(i<Global.w-1){//看下
+    					if(Global.ditu[i+1][j].equals("X"))
+    						Global.num_px[i][j]++;
+    					if(i==17&&j==3){
+    					//	System.out.println("3找到了");
+    					}	
+    				}
+    			}
+    		}
+    	}
+    	boolean panduan=true;
+    	for(int i=0;i<Global.w;i++){
+    		for(int j=0;j<Global.h;j++){
+    			//System.out.println(i+" "+j+" "+Global.num_px[i][j]);
+    			if(Global.num_px[i][j]>1){
+    				panduan=false;
+    				break;
+    			}
+    		}
+    	}
+    	
+    	return panduan;
     }
 }

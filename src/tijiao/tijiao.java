@@ -524,7 +524,8 @@ class Init {
     	int temp=0;
     	for(int i=0;i<num_p-1;i++){
     		for(int j=0;j<num_p-1;j++){
-    			if(Global.Dist[Global.I][Global.park_paixu[j]]<Global.Dist[Global.I][Global.park_paixu[j+1]]){  
+    			//修改
+    			if((Global.Dist[Global.I][Global.park_paixu[j]]+Global.Dist[Global.E][Global.park_paixu[j]])>(Global.Dist[Global.I][Global.park_paixu[j+1]]+Global.Dist[Global.E][Global.park_paixu[j+1]])){  
     	            temp=Global.park_paixu[j];  
     	            Global.park_paixu[j]=Global.park_paixu[j+1];  
     	            Global.park_paixu[j+1]=temp;  

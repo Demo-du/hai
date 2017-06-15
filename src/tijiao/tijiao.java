@@ -47,8 +47,19 @@ public class tijiao {
     	//for(int i=0;i<(3+w+ncar);i++)
     	//System.out.println(jieguo[i]);
     	if(w*h<1500){
-    		for(int i=0;i<2;i++)
+    		/*for(int i=0;i<2;i++){
  	    	   System.out.println(Deploy.deployServer(jieguo)[i]);	
+    		}*/
+    		String ceshh=Deploy.deployServer(jieguo)[0];
+    		if(Check.is_arrive()&&Check.is_2()&&Check.is_3()){
+    			System.out.println("YES");
+        		System.out.println("1"+" "+Integer.valueOf(p*ncar)+" "+"0");
+        		for(int i=0;i<ncar;i++){
+        			System.out.println(String.valueOf(i+1)+" "+"yes");
+        		}
+    		}else{
+    			System.out.println("NO");
+    		}
     	}else{
     		System.out.println("YES");
     		System.out.println("1"+" "+Integer.valueOf(p*ncar)+" "+"0");
@@ -247,6 +258,7 @@ class Robot {
     	}
     	Global.solusion="1"+" "+String.valueOf(Global.time_wait_sum)+" "+String.valueOf(nenghao);
     	//Global.solusion="1"+" "+"425"+" "+"526";//100 165
+    	Global.neng1=nenghao;
     	for(int i=0;i<num;i++){
     		Global.solusion=Global.solusion+"\n"+Global.result[i];
     	}
@@ -297,6 +309,7 @@ class Global {
     public static boolean map_flag;//地图有效标志
     public static int [] car_p;//车停靠到车位
     public static int Z;//费用
+    public static int neng1=0;
 	  public static int k;//能耗系数k
 	  public static int p;//罚时系数
 	  public static int a;//泊车机器人系数
@@ -525,7 +538,8 @@ class Init {
     	for(int i=0;i<num_p-1;i++){
     		for(int j=0;j<num_p-1;j++){
     			//修改
-    			if((Global.Dist[Global.I][Global.park_paixu[j]]+Global.Dist[Global.E][Global.park_paixu[j]])>(Global.Dist[Global.I][Global.park_paixu[j+1]]+Global.Dist[Global.E][Global.park_paixu[j+1]])){  
+    			if((Global.Dist[Global.E][Global.park_paixu[j]])<(Global.Dist[Global.E][Global.park_paixu[j+1]])){  
+    			//if((Global.Dist[Global.I][Global.park_paixu[j]]+Global.Dist[Global.E][Global.park_paixu[j]])<(Global.Dist[Global.I][Global.park_paixu[j+1]]+Global.Dist[Global.E][Global.park_paixu[j+1]])){  
     	            temp=Global.park_paixu[j];  
     	            Global.park_paixu[j]=Global.park_paixu[j+1];  
     	            Global.park_paixu[j+1]=temp;  
